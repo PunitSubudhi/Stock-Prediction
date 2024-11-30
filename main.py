@@ -18,14 +18,15 @@ with st.sidebar:
     if len(tickers) < len(stock_symbol):
         st.write("Some of the stock symbols you entered are invalid")
         
-if 'view' in view:   
-    for df,symbol in zip(get_history(get_tickers(stock_symbol)), get_tickers(stock_symbol)):
-        with st.expander(symbol.info['longName'], expanded=False):
-            st.dataframe(df)
+if view:
+    if 'view' in view:
+        for df,symbol in zip(get_history(get_tickers(stock_symbol)), get_tickers(stock_symbol)):
+            with st.expander(symbol.info['longName'], expanded=False):
+                st.dataframe(df)
 
-if 'graph' in view:
-    for df,symbol in zip(get_history(get_tickers(stock_symbol)), get_tickers(stock_symbol)):
-        with st.expander(symbol.info['longName'], expanded=False):
-            st.line_chart(df['Close'])
-            st.line_chart(df['Volume'])
+    if 'graph' in view:
+        for df,symbol in zip(get_history(get_tickers(stock_symbol)), get_tickers(stock_symbol)):
+            with st.expander(symbol.info['longName'], expanded=False):
+                st.line_chart(df['Close'])
+                st.line_chart(df['Volume'])
 
