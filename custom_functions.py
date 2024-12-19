@@ -1,7 +1,10 @@
 import pandas as pd
 import yfinance as yf
 import prophet as prophet
+import streamlit as st
 
+
+@st.cache_resource
 def get_tickers(symbols):
     to_return = []
     for symbol in symbols:
@@ -11,13 +14,16 @@ def get_tickers(symbols):
             to_return.append(ticker)
     print(to_return)
     return to_return
-    
+
+@st.cache_resource
 def get_ticker(symbol):
     ticker = yf.Ticker(symbol)
     if ticker.history(period='1d').__len__() == 0:
         print(ticker.info)
         return None
     return ticker
+
+
 
 def get_history(tickers: list):
     return [ticker.history(period="max") for ticker in tickers]
